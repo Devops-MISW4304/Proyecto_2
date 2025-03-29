@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: blacklist_db_postgres
+    environment:
+      POSTGRES_USER: ${DB_USER:-user_db}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password_db}
+      POSTGRES_DB: ${DB_NAME:-blacklist_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-user_db} -d ${DB_NAME:-blacklist_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  web:
+    build: .
+    container_name: blacklist_api_web
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgresql://${DB_USER:-user_db}:${DB_PASSWORD:-password_db}@db:5432/${DB_NAME:-blacklist_db}
+      FLASK_CONFIG: ${FLASK_CONFIG:-development} 
+      SECRET_KEY: ${SECRET_KEY:-una-llave-secreta-por-defecto-muy-insegura}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-otra-llave-secreta-jwt-insegura}
+      STATIC_BEARER_TOKEN: ${STATIC_BEARER_TOKEN:-default-insecure-static-token}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
