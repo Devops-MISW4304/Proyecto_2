@@ -2,7 +2,7 @@ from marshmallow import fields, validate, ValidationError
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from email_validator import validate_email, EmailNotValidError
 
-from .. import ma
+from .. import ma, db
 from ..models.blacklist import BlacklistEntry
 
 def validate_email_address(email):
@@ -15,6 +15,7 @@ class BlacklistSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = BlacklistEntry
         load_instance = True
+        sqla_session = db.session  # Se asigna la sesión de SQLAlchemy
 
     id = fields.Int(dump_only=True)
     email = fields.Email(required=True, validate=validate_email_address)
