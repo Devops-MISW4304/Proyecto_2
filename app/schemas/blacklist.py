@@ -23,3 +23,6 @@ class BlacklistSchema(SQLAlchemyAutoSchema):
     blocked_reason = fields.Str(required=True, validate=validate.Length(min=1, max=255))
     ip_address = fields.Str(dump_only=True)
     created_at = fields.DateTime(dump_only=True)
+
+
+blacklist_creation_schema = BlacklistSchema()
