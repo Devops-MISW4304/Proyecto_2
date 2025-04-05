@@ -25,3 +25,9 @@ Se maneja un token bearer de 1234
                "blocked_reason"```Testeo"
              }'
     ```
+
+2.  **Consultar email   (GET por email a Blacklist):**
+    ```
+    curl -X GET http://localhost:5000/api/v1/blacklists/test@example.com \
+        -H "Authorization: Bearer 1234"
+    ```
