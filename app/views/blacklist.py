@@ -81,9 +81,7 @@ class BlacklistDetailResource(Resource):
     @token_required
     def get(self, email):
         entry = BlacklistEntry.query.filter_by(email=email).first()
-        #Get por id
         if not entry:
-            return {"message": f"No se encontró una entrada con el email {email}"}, 404
-        schema = BlacklistSchema()
-        result = schema.dump(entry)
-        return {"blacklist": result}, 200
+            return {"is_blacklisted": False, "blocked_reason": None}, 200
+        
+        return {"is_blacklisted": True, "blocked_reason": entry.blocked_reason}, 200
