@@ -3,12 +3,12 @@
 
 1.  **Levantar Servicios:**
     ```
-    docker-compose up --build -d
+    docker-compose -f local-dev-docker-compose.yml up --build -d
     ```
 
 2.  **Inicializar Base de Datos (una vez apenas se hayan buildeado los servicios):**
     ```
-    docker-compose exec web flask init_db
+    docker-compose -f local-dev-docker-compose.yml exec web flask init_db
     ```
 
 Se maneja un token bearer de 1234
@@ -22,7 +22,7 @@ Se maneja un token bearer de 1234
          -d '{
                "email": "test@example.com",
                "app_uuid": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-               "blocked_reason"```Testeo"
+               "blocked_reason": "Testeo"
              }'
     ```
 
