@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "fb8df172-da1e-4c36-a83f-6a073cc06bd9",
+		"name": "Proyecto 1",
+		"description": "Colección de Endpoints para la gestión de listas negras de emails.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40692466",
+		"_collection_link": "https://www.postman.com/eds-api-project/workspace/devops-misw4304/collection/40692466-fb8df172-da1e-4c36-a83f-6a073cc06bd9?action=share&source=collection_link&creator=40692466"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/ping",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"ping"
+					]
+				},
+				"description": "Permite verificar que el servicio se encuentra en funcionamiento. No require autenticación."
+			},
+			"response": [
+				{
+					"name": "Example Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://proyecto-1-docker-postgres-env.eba-mpzjjrrf.us-east-1.elasticbeanstalk.com/ping",
+							"protocol": "http",
+							"host": [
+								"proyecto-1-docker-postgres-env",
+								"eba-mpzjjrrf",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
+							],
+							"path": [
+								"ping"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.26.3"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 02:37:27 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "19"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"pong\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Verificar Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/blacklists/{{email}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"blacklists",
+						"{{email}}"
+					]
+				},
+				"description": "Permite saber si un email está en la lista negra global de la organización o no, y el motivo por el que fue agregado a la lista negra."
+			},
+			"response": [
+				{
+					"name": "Example Blocked",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://proyecto-1-docker-postgres-env.eba-mpzjjrrf.us-east-1.elasticbeanstalk.com/api/v1/blacklists/postman.test@example.com",
+							"protocol": "http",
+							"host": [
+								"proyecto-1-docker-postgres-env",
+								"eba-mpzjjrrf",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"blacklists",
+								"postman.test@example.com"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.26.3"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 02:41:57 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"is_blacklisted\": true,\n    \"blocked_reason\": \"Testeo\"\n}"
+				},
+				{
+					"name": "Example Not Blocked",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/blacklists/{{email}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"blacklists",
+								"{{email}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.26.3"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 02:43:23 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"is_blacklisted\": false,\n    \"blocked_reason\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Añadir Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"app_uuid\": \"{{appUuid}}\",\n    \"blocked_reason\": \"{{blockedReason}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/blacklists",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"blacklists"
+					]
+				},
+				"description": "Permite agregar un email a la lista negra global de la organización."
+			},
+			"response": [
+				{
+					"name": "Example Pre-Existence",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"postman.test@example.com\",\n    \"app_uuid\": \"a1b2c3d4-e5f6-7890-1234-567890abcdef\",\n    \"blocked_reason\": \"Test from Postman!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://proyecto-1-docker-postgres-env.eba-mpzjjrrf.us-east-1.elasticbeanstalk.com/api/v1/blacklists",
+							"protocol": "http",
+							"host": [
+								"proyecto-1-docker-postgres-env",
+								"eba-mpzjjrrf",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"blacklists"
+							]
+						}
+					},
+					"status": "CONFLICT",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.26.3"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 02:46:22 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "70"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Email test@example.com ya se encuentra en la blacklist\"\n}"
+				},
+				{
+					"name": "Example Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"app_uuid\": \"{{appUuid}}\",\n    \"blocked_reason\": \"{{blockedReason}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/blacklists",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"blacklists"
+							]
+						}
+					},
+					"status": "CREATED",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.26.3"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 06 Apr 2025 02:48:04 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "89"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Email postman.test@example.com añadida a la blacklist correctamente.\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
