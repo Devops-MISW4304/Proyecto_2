@@ -1,5 +1,10 @@
 # Proyecto API entrega 1 proyecto DevOPS
 
+**Integrantes:**
+* Juan Andrés Bernal
+* Juan Sebastián Urrea
+* Johan Alexis Bautista
+* Juan Camilo Ibáñez 
 
 1.  **Levantar Servicios:**
     ```
@@ -31,3 +36,6 @@ Se maneja un token bearer de 1234
     curl -X GET http://localhost:5000/api/v1/blacklists/test@example.com \
         -H "Authorization: Bearer 1234"
     ```
+
+**Video-sustentación:**
+https://youtu.be/MrhrOEzjkIM?si=n7y4F1PkQBBjB5un
