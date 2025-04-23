@@ -37,5 +37,9 @@ Se maneja un token bearer de 1234
         -H "Authorization: Bearer 1234"
     ```
 
-**Video-sustentación:**
-https://youtu.be/MrhrOEzjkIM?si=n7y4F1PkQBBjB5un
+    **Comando para correr los tests:**
+    ```
+    python -m unittest tests/test_blacklist_endpoints.py
+    ```
+
+
