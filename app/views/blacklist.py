@@ -81,7 +81,7 @@ class BlacklistDetailResource(Resource):
     @token_required
     def get(self, email):
         entry = BlacklistEntry.query.filter_by(email=email).first()
-        print("Cambio sencillo v3 para probar ejecución del pipeline Codebuild")
+        print("Cambio v4 ejecución automatica pipeline Codebuild")
         
         if not entry:
             return {"is_blacklisted": False, "blocked_reason": None}, 200
