@@ -12,3 +12,12 @@ class Config:
         'sqlite:///' + os.path.join(basedir, 'app.db')
     DEBUG = False
     STATIC_BEARER_TOKEN = os.environ.get('STATIC_BEARER_TOKEN') or 'default-insecure-static-token'
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # SQLite en memoria para CI
+
+config_by_name = {
+    'development': Config,
+    'testing': TestingConfig
+}
