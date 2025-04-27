@@ -1,4 +1,4 @@
-# Proyecto 2 entrega 1 proyecto CI
+# Proyecto 2 entrega 1 
 
 **Integrantes:**
 * Juan Andrés Bernal
