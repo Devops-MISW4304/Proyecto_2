@@ -15,7 +15,7 @@ class Config:
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  # SQLite en memoria para CI
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'  
 
 config_by_name = {
     'development': Config,

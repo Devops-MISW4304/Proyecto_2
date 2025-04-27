@@ -1,4 +1,4 @@
-# Proyecto API entrega 1 proyecto DevOPS
+# Proyecto 2 entrega 1 proyecto CI
 
 **Integrantes:**
 * Juan Andrés Bernal
