@@ -1,4 +1,4 @@
-# Proyecto 2 entrega 1 
+# Proyecto 2 entrega 1 - Integración Continua 
 
 **Integrantes:**
 * Juan Andrés Bernal
