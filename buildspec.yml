@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - echo Running unit tests
+      - export FLASK_CONFIG=testing
+      - python -m unittest discover tests
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
