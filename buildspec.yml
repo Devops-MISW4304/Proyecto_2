@@ -4,7 +4,6 @@ env:
   variables:
     IMAGE_REPO_NAME: "blacklist-api"
     IMAGE_TAG: "latest"
-  parameter-store:
     AWS_ACCOUNT_ID: "904869824889" 
 
 phases:
