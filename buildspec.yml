@@ -1,17 +1,35 @@
 version: 0.2
 
+env:
+  variables:
+    IMAGE_REPO_NAME: "blacklist-api"
+    IMAGE_TAG: "latest"
+  parameter-store:
+    AWS_ACCOUNT_ID: "904869824889" 
+
 phases:
-  install:
-    runtime-versions:
-      python: 3.11
+  pre_build:
     commands:
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+      - REPOSITORY_URI=904869824889.dkr.ecr.us-east-2.amazonaws.com/blacklist-api
+      - echo REPOSITORY_URI=$REPOSITORY_URI
+      - echo Running unit tests...
       - pip install -r requirements.txt
-  build:
-    commands:
-      - echo Running unit tests
       - export FLASK_CONFIG=testing
       - python -m unittest discover tests
+  build:
+    commands:
+      - echo Building the Docker image...
+      - docker build -t $IMAGE_REPO_NAME .
+      - docker tag $IMAGE_REPO_NAME:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions...
+      - printf '[{"name":"web","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
   files:
-    - '**/*'
-  discard-paths: yes
+    - imagedefinitions.json
