@@ -92,8 +92,8 @@ class BlacklistResourceTests(unittest.TestCase):
         data = json.loads(response.data)
         self.assertEqual(data['message'], 'Internal server error while adding email')        
         
-    def test_fallo_simulado_para_entrega(self):
-        self.assertFalse(True, "Fallo simulado para ver el pipeline fallar")
+    #def test_fallo_simulado_para_entrega(self):
+    #    self.assertFalse(True, "Fallo simulado para ver el pipeline fallar")
 
 class BlacklistDetailResourceTests(unittest.TestCase):
 
