@@ -2,10 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from flask import json
 from uuid import uuid4
-
-# Importa directamente desde las carpetas de tu aplicación
-# Asegúrate de que estas importaciones coincidan con tu estructura de directorios
-from app import create_app, db # Importa db también para gestionarla en los tests
+from app import create_app, db 
 from app.models.blacklist import BlacklistEntry
 from app.schemas.blacklist import BlacklistSchema
 
@@ -14,7 +11,7 @@ class BlacklistResourceTests(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.app.config['TESTING'] = True
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:' # Usa una DB en memoria para tests
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:' 
         self.app.config['STATIC_BEARER_TOKEN'] = 'test_token'
         self.client = self.app.test_client()
 
@@ -24,7 +21,6 @@ class BlacklistResourceTests(unittest.TestCase):
 
     def tearDown(self):
         with self.app.app_context():
-            # Limpia la base de datos después de cada test
             self.db.session.remove()
             self.db.drop_all()
 
@@ -94,8 +90,10 @@ class BlacklistResourceTests(unittest.TestCase):
         }, headers={'Authorization': 'Bearer test_token'})
         self.assertEqual(response.status_code, 500)
         data = json.loads(response.data)
-        self.assertEqual(data['message'], 'Internal server error while adding email')
-
+        self.assertEqual(data['message'], 'Internal server error while adding email')        
+        
+    def test_fallo_simulado_para_entrega(self):
+        self.assertFalse(True, "Fallo simulado para ver el pipeline fallar")
 
 class BlacklistDetailResourceTests(unittest.TestCase):
 
