@@ -27,6 +27,6 @@ def create_app(config_name=None):
 
     @app.route('/ping')
     def ping():
-        return jsonify({"message": "pong"})
+        return jsonify({"message": "pong v2"})
 
     return app
