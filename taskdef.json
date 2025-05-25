@@ -16,7 +16,7 @@
       "environment": [
         {
           "name": "NEW_RELIC_LICENSE_KEY",
-          "value": "TU_LICENSE_KEY"
+          "value": "01408373CF923BCB4A11301EA1A82A7AEF57E4CF0CB45CD18A3EF476E05AF0BD"
         },
         {
           "name": "NEW_RELIC_APP_NAME",
