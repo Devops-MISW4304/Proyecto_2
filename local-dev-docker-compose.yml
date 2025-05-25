@@ -20,6 +20,8 @@ services:
       start_period: 10s
     restart: unless-stopped
 
+
+
   web:
     build: .
     container_name: blacklist_api_web
