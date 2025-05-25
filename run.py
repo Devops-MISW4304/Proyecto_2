@@ -14,3 +14,5 @@ def init_db_command():
 def init_db_route():
     db.create_all()
     return "Tablas creadas."
+
+
