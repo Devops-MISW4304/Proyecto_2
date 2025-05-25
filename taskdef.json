@@ -1,0 +1,57 @@
+{
+  "family": "blacklist-api",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::904869824889:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::904869824889:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "web",
+      "image": "<IMAGE_URI_PLACEHOLDER>",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 5000
+        }
+      ],
+      "environment": [
+        {
+          "name": "NEW_RELIC_LICENSE_KEY",
+          "value": "TU_LICENSE_KEY"
+        },
+        {
+          "name": "NEW_RELIC_APP_NAME",
+          "value": "blacklist-api"
+        },
+        {
+          "name": "NEW_RELIC_LOG",
+          "value": "stdout"
+        },
+        {
+          "name": "NEW_RELIC_LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "name": "NEW_RELIC_DISTRIBUTED_TRACING_ENABLED",
+          "value": "true"
+        },
+        {
+          "name": "FLASK_CONFIG",
+          "value": "production"
+        }
+      ],
+      "command": [
+        "newrelic-admin",
+        "run-program",
+        "gunicorn",
+        "--bind",
+        "0.0.0.0:5000",
+        "run:app"
+      ]
+    }
+  ],
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "256",
+  "memory": "512"
+}
