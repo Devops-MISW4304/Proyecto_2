@@ -9,3 +9,8 @@ def init_db_command():
     print("Creando tablas...")
     db.create_all()
     print("Tablas creadas.")
+    
+@app.route('/init_db')
+def init_db_route():
+    db.create_all()
+    return "Tablas creadas."
