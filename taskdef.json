@@ -1,8 +1,7 @@
 {
   "family": "blacklist-api",
   "networkMode": "awsvpc",
-  "executionRoleArn": "arn:aws:iam::904869824889:role/ecsTaskExecutionRole",
-  "taskRoleArn": "arn:aws:iam::904869824889:role/ecsTaskExecutionRole",
+  "executionRoleArn": "<ECS_EXECUTION_ROLE_ARN>",
   "containerDefinitions": [
     {
       "name": "web",
@@ -14,30 +13,22 @@
         }
       ],
       "environment": [
-        {
-          "name": "NEW_RELIC_LICENSE_KEY",
-          "value": "01408373CF923BCB4A11301EA1A82A7AEF57E4CF0CB45CD18A3EF476E05AF0BD"
-        },
-        {
-          "name": "NEW_RELIC_APP_NAME",
-          "value": "blacklist-api"
-        },
-        {
-          "name": "NEW_RELIC_LOG",
-          "value": "stdout"
-        },
-        {
-          "name": "NEW_RELIC_LOG_LEVEL",
-          "value": "info"
-        },
-        {
-          "name": "NEW_RELIC_DISTRIBUTED_TRACING_ENABLED",
-          "value": "true"
-        },
-        {
-          "name": "FLASK_CONFIG",
-          "value": "production"
-        }
+        { "name": "FLASK_APP", "value": "run.py" },
+        { "name": "STATIC_BEARER_TOKEN", "value": "1234" },
+        { "name": "DB_PORT", "value": "5432" },
+        { "name": "DB_USER", "value": "user_db" },
+        { "name": "DB_NAME", "value": "blacklist_db" },
+        { "name": "DB_PASSWORD", "value": "password_db" },
+        { "name": "DB_HOST", "value": "127.0.0.1" },
+        { "name": "DATABASE_URL", "value": "postgresql://user_db:password_db@127.0.0.1:5432/blacklist_db" },
+        { "name": "FLASK_ENV", "value": "development" },
+        { "name": "JWT_SECRET_KEY", "value": "1234" },
+        { "name": "SECRET_KEY", "value": "1234" },
+        { "name": "NEW_RELIC_LICENSE_KEY", "value": "<NEW_RELIC_LICENSE_KEY_PLACEHOLDER>" },
+        { "name": "NEW_RELIC_APP_NAME", "value": "blacklist-api" },
+        { "name": "NEW_RELIC_LOG", "value": "stdout" },
+        { "name": "NEW_RELIC_LOG_LEVEL", "value": "info" },
+        { "name": "NEW_RELIC_DISTRIBUTED_TRACING_ENABLED", "value": "true" }
       ],
       "command": [
         "newrelic-admin",
@@ -46,7 +37,36 @@
         "--bind",
         "0.0.0.0:5000",
         "run:app"
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/blacklist-entrega3",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "web"
+        }
+      }
+    },
+    {
+      "name": "db",
+      "image": "postgres:15-alpine",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 5432 }
+      ],
+      "environment": [
+        { "name": "POSTGRES_USER", "value": "user_db" },
+        { "name": "POSTGRES_PASSWORD", "value": "password_db" },
+        { "name": "POSTGRES_DB", "value": "blacklist_db" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/blacklist-entrega3",
+          "awslogs-region": "us-east-2",
+          "awslogs-stream-prefix": "db"
+        }
+      }
     }
   ],
   "requiresCompatibilities": [
